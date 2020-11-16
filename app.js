@@ -26,7 +26,7 @@ var upload = multer( { storage: storage } );
 // finish with multer
 
 app.get('/', (req, res) => {
-  res.sendStatus(200)
+  
   res.send('Welcome to node-skadepot server')
 });
 var subjectField
