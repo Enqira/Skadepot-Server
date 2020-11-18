@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const formidable = require('formidable');
 const path = require('path')
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 });
 var subjectField
 var imagePath
+var imageName
 
 app.post('/upload', upload.single('image'), function (req, res, next) {
   // req.file will hold files like images
@@ -40,72 +42,34 @@ app.post('/upload', upload.single('image'), function (req, res, next) {
   console.log("title: "+req.body.title)
   console.log("image file name: "+req.file.filename)
   console.log("image path: "+req.file.path)
-  console.log("file encoding: "+req.file.encoding)
-  console.log("file mimetype: "+req.file.encoding)
+  // console.log("file encoding: "+req.file.encoding)
+  imageName = req.file.filename
   imagePath = req.file.path
   subjectField = req.body.title
   sendEmailNow()
+
+  res.end('It worked!');
   
 })
 
-const blobToImage = (blob) => {
-  return new Promise(resolve => {
-    const url = URL.createObjectURL(blob)
-    let img = new Image()
-    img.onload = () => {
-      URL.revokeObjectURL(url)
-      resolve(img)
-    }
-    img.src = url
-  })
-}
 
-// app.post('/upload', (req, res, next) => {
-//   const form = formidable({ multiples: true });
-
-//     let body = '';
-//     req.on('data', chunk => {
-//         body += chunk.toString(); // convert Buffer to string
-//     });
-//     req.on('end', () => {
-//         console.log(body);
-//         res.end('ok');
-//     });
-
-
-   
-//   // form.parse(req, (err, fields, files) => {
-//   //   if (err) {
-//   //     next(err);
-//   //     return;
-//   //   }
-//   //   // res.json({ fields, files });
-    
-//   //   console.log({ fields, files })
-//   //   // console.log(req.title)
-    
-//   //   });
-    
-// });
- 
-// Nodemailer starts here
 "use strict"
 
 
 // async..await is not allowed in global scope, must use a wrapper
-async function sendEmailNow() {
+function sendEmailNow() {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
     //let testAccount = await nodemailer.createTestAccount();
 const account = {
-    user:"moenkira@yahoo.com",
-    pass: "Bagsvaerd118--"
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD
 }
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: "smtp.mail.yahoo.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
       user: account.user, // generated ethereal user
       pass: account.pass, // generated ethereal password
@@ -116,17 +80,18 @@ const account = {
   });
 
   // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <moenkira@yahoo.com>', // sender address
-    to: 'moenqira@gmail.com', // list of receivers
+  let info = transporter.sendMail({
+    from: '"Fred Foo 👻" <moenqira@gmail.com>', // sender address
+    to: 'moenkira@yahoo.com', // list of receivers
     subject: subjectField, // Subject line
     text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // html body
+    html: 'Embedded image: <img src="cid:unique@kreata.ee"/>', // html body
     attachments: [
          {   // data uri as an attachment
-
-            path: imagePath
-        }
+          filename: imageName,
+        path: imagePath,
+        cid: 'cid:unique@kreata.ee' //same cid value as in the html img src
+    }
      ]
   });
 
@@ -144,7 +109,7 @@ const account = {
 
 
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}...`));
 
