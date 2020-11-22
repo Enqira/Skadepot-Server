@@ -1,12 +1,20 @@
 require('dotenv').config()
 const express = require('express');
+const mongoose = require('mongoose')
+const DataEntry = require('./dataEntry')
 const formidable = require('formidable');
 const path = require('path')
 var multer  = require('multer')
 const nodemailer = require("nodemailer");
 
 
- 
+// Connect mongoose
+const dbURI = 
+mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+.then((result) => console.log('connected to db'))
+.catch((err) => console.log(err))
+
+
 const app = express();
  
 // setup static folder for images
@@ -30,26 +38,55 @@ app.get('/', (req, res) => {
   
   res.send('Welcome to node-skadepot server')
 });
+
+
+// app.post('/upload', upload.single('image'), function (req, res, next) {
+//   // req.file will hold files like images
+//   // req.body will hold the text fields, if there were any
+
+//   console.log("uncoming post request from Skadepot")
+//   console.log("title: "+req.body.title)
+//   console.log("image file name: "+req.file.filename)
+//   console.log("image path: "+req.file.path)
+//   // console.log("file encoding: "+req.file.encoding)
+//   imageName = req.file.filename
+//   imagePath = req.file.path
+//   subjectField = req.body.title
+//   sendEmailNow()
+
+//   res.end('It worked!');
+  
+// })
+
+
 var subjectField
 var imagePath
 var imageName
 
+// mongoose and mongodb
 app.post('/upload', upload.single('image'), function (req, res, next) {
   // req.file will hold files like images
   // req.body will hold the text fields, if there were any
-
-  console.log("uncoming post request from Skadepot")
-  console.log("title: "+req.body.title)
-  console.log("image file name: "+req.file.filename)
-  console.log("image path: "+req.file.path)
-  // console.log("file encoding: "+req.file.encoding)
+  console.log(req.body)
+  console.log(req.file.path)
+  const dataEntry = new DataEntry({
+    title: req.body.title,
+    imageName: req.file.filename,
+    imagePath: req.file.path,
+    date: new Date()
+  });
+  dataEntry.save()
+    .then((result) => {
+      res.send(result)
+      console.log("Data entry added")
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   imageName = req.file.filename
   imagePath = req.file.path
   subjectField = req.body.title
   sendEmailNow()
-
-  res.end('It worked!');
-  
 })
 
 
@@ -85,7 +122,7 @@ const account = {
     to: 'moenkira@yahoo.com', // list of receivers
     subject: subjectField, // Subject line
     text: "Hello world?", // plain text body
-    html: 'Embedded image: <img src="cid:unique@kreata.ee"/>', // html body
+    html: 'This message is from Skadepot', // html body
     attachments: [
          {   // data uri as an attachment
           filename: imageName,
@@ -98,9 +135,6 @@ const account = {
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-  // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
 // sendEmailNow().catch(console.error);
