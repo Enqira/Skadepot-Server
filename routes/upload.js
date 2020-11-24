@@ -4,6 +4,7 @@ const path = require("path");
 const multer = require("multer");
 const sendEmailNow = require("../nmailer.js");
 const DataEntry = require("../models/dataEntry");
+const verify = require("../verifyToken");
 
 // setup static folder for images
 router.use("./uploads/images", express.static(path.join(__dirname, "public")));
@@ -24,27 +25,32 @@ let subjectField;
 let objectsToSend;
 
 // post for /upload data
-router.post("/upload", upload.array("image", 99), function (req, res, next) {
-  // req.file will hold files like images
-  // req.body will hold the text fields, if there were any
-  const dataEntry = new DataEntry({
-    title: req.body.title,
-    image: req.files,
-    date: new Date(),
-  });
-  dataEntry
-    .save()
-    .then((result) => {
-      res.sendStatus(200);
-
-      console.log("Data entry added");
-    })
-    .catch((err) => {
-      console.log(err);
+router.post(
+  "/upload",
+  verify,
+  upload.array("image", 99),
+  function (req, res, next) {
+    // req.file will hold files like images
+    // req.body will hold the text fields, if there were any
+    const dataEntry = new DataEntry({
+      title: req.body.title,
+      image: req.files,
+      date: new Date(),
     });
-  objectsToSend = req.files;
-  subjectField = req.body.title;
-  sendEmailNow.mailNow(subjectField, objectsToSend);
-});
+    dataEntry
+      .save()
+      .then((result) => {
+        res.sendStatus(200);
+
+        console.log("Data entry added");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    objectsToSend = req.files;
+    subjectField = req.body.title;
+    sendEmailNow.mailNow(subjectField, objectsToSend);
+  }
+);
 
 module.exports = router;
