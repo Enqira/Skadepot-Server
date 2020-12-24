@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+body {
+  font-family: "HelveticaNeue-Light", "HelveticaNeue", Helvetica, Arial,
+    sans-serif;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  background: rgb(112, 146, 112);
+  overflow: hidden;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+h2 {
+  padding: 10px;
+}
+
+#user-field,
+#pass-field {
+  padding: 5px;
+  margin: 5px;
+}
+
+label {
+  padding-top: 10px;
+}

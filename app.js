@@ -27,12 +27,29 @@ app.use(function (req, res, next) {
 })
 
 dotenv.config()
+
+// public
+// const serveOptions = {
+//   dotfiles: "ignore",
+//   etag: false,
+//   extensions: ["htm", "html", "jpg", "png"],
+//   index: false,
+//   maxAge: "1d",
+//   redirect: false,
+//   setHeaders: function (res, path, stat) {
+//     res.set("x-timestamp", Date.now())
+//   }
+// }
+app.use(express.static(path.join(__dirname, "public")))
+
+//
 app.use(express.json())
 app.use("/", require("./routes/login"))
 app.use("/", require("./routes/register"))
 app.use("/", require("./routes/upload"))
 app.use("/", require("./routes/posts"))
 app.use("/", require("./routes/search"))
+app.use("/", require("./routes/loginadmin"))
 
 // Connect mongoose
 const dbURI = process.env.DB_CONNECT

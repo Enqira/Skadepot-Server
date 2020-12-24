@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com http://localhost:3001; script-src 'self' http://* 'unsafe-inline'; style-src 'self' http://* 'unsafe-inline'; media-src *; img-src *">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Cloud Pack</title>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <nav>
+                <ul class="menu">
+                    <li>Stadistics</li>
+                    <li>History</li>
+                    <li>Users</li>
+                </ul>
+                <ul class="login">
+                    <li>log-in</li>
+                </ul>
+            </nav>
+        </header>
+
+        <section>
+
+            <article class="search-container">
+                <div>
+                    <input id="search-input" type="input" placeholder="Enter package number">
+                </div>
+                <button id="search-btn" type="button">Search</button>
+            </article>
+
+            <div class="content-container">
+                <aside>
+                    <ul class="info">
+                        <li>package info</li>
+                        <li>package info</li>
+                        <li>package info</li>
+                        <li>package info</li>
+                    </ul>
+                </aside>
+
+                <article class="img-container">
+                    <div id="img-box">
+
+                    </div>
+                </article>
+            </div>
+
+        </section>
+
+        <footer>
+            <p>Copyright 2020 Cloud Pack</p>
+        </footer>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>

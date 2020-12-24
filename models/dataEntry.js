@@ -1,24 +1,28 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 const dataEntrySchema = new Schema({
-  title: {
+  num: {
     type: String,
-    required: true,
+    required: true
+  },
+  username: {
+    type: String,
+    required: true
   },
   image: {
     type: Array,
-    required: false,
+    required: true
   },
-  imagePath: {
-    // type: String,
-    required: false,
+  comment: {
+    type: String,
+    required: false
   },
   date: {
     type: Date,
-    default: Date.now,
-  },
-});
+    default: Date.now
+  }
+})
 
-const DataEntry = mongoose.model("DataEntry", dataEntrySchema);
-module.exports = DataEntry;
+const DataEntry = mongoose.model("DataEntry", dataEntrySchema)
+module.exports = DataEntry
