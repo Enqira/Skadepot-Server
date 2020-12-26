@@ -32,31 +32,43 @@ nav li {
   margin-left: 8px;
 }
 
-.menu {
+.options {
   background: lime;
   list-style: none;
   display: flex;
-  justify-content: space-between;
-  width: 35%;
+  justify-content: space-evenly;
+  max-width: 100%;
 }
 
 /* search and info */
-.search-container {
+.search-container,
+.search-info {
   background: lightblue;
-  height: 50px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-.info {
+.search-info {
+  color: red;
+}
+.info-container {
   height: 100vh;
+  width: 200px;
+  background-color: rgba(34, 55, 68, 0.178);
+  display: flex;
+  flex-direction: column;
+}
+
+.num-info,
+.package-info {
+  min-height: 100px;
   width: 200px;
   background-color: lightskyblue;
   display: flex;
   flex-direction: column;
 }
-.info li {
+.num-info li {
   background: blueviolet;
   margin: 10px;
 }
