@@ -1,12 +1,14 @@
 // search
 const searchInput = document.getElementById("search-input")
-// searchInput.addEventListener("input", search)
 document.getElementById("search-btn").addEventListener("click", search)
 
-// document.querySelector(".numLi").addEventListener("click", selectedNum)
+searchInput.addEventListener("keyup", () => event.keyCode === 13 && search())
 
 // handle results from search
 const handleResult = result => {
+  // delete search input value
+  searchInput.value = ""
+
   const searchInfo = document.querySelector(".search-info")
   if (result.length < 1) {
     searchInfo.textContent = "Nothing found!"
@@ -48,6 +50,9 @@ const displayNumbers = result => {
   while (numInfo.firstChild) {
     numInfo.removeChild(numInfo.firstChild)
   }
+  const label = document.createElement("li")
+  label.textContent = `${result.length} result/s with reference: ${result[0].num}`
+  numInfo.appendChild(label)
 
   // loop through and add number to info column
   result.map(n => {
@@ -63,7 +68,7 @@ const displayNumbers = result => {
     li.id = n._id
     li.className = "numLi"
 
-    li.textContent = n.num
+    li.textContent = `images: ${n.image.length}`
     dateLi.textContent = numDate
     timeLi.textContent = newTime
 
@@ -77,21 +82,27 @@ const displayNumbers = result => {
   })
 }
 
+//   get token
+function getCookie(name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(";").shift()
+}
 // when search btn clicked
 function search() {
   removeNumbers()
   removeImages()
   removeInfo()
+  const value = getCookie("token")
 
   const myHeaders = new Headers()
-  myHeaders.append("auth-token", tokenHere)
+  myHeaders.append("auth-token", value)
 
   myHeaders.append("Content-Type", "application/json")
 
   const requestOptions = {
     method: "GET",
     headers: myHeaders,
-    // body: raw,
     redirect: "follow"
   }
 
@@ -99,7 +110,7 @@ function search() {
   fetch(`http://localhost:3001/search?num=${searchInput.value}`, requestOptions)
     .then(response => response.json())
     .then(result => handleResult(result))
-    .catch(error => alert("error", error))
+    .catch(error => alert("something went wrong", error))
 }
 //   Display images
 const displayImages = res => {
@@ -117,7 +128,33 @@ const displayImages = res => {
     // displaying image
     const newImg = document.createElement("img")
     newImg.src = imgURL
+    newImg.id = imgURL
+    newImg.className = "displayedImg"
     imgBox.appendChild(newImg)
+    // const selectedImg = document.getElementById(`#${imgURL}`)
+    // newImg  .addEventListener("click", function () {
+    //   //   displayImage(selectedImg)
+    //   this.style.setProperty("width", "500px", "important")
+
+    //   console.log("clicked")
+    // })
+    var modal = document.getElementById("myModal")
+
+    // Get the image and insert it inside the modal
+    var img = document.getElementById(imgURL)
+    var modalImg = document.getElementById("modal-img")
+    img.onclick = function () {
+      modal.style.display = "block"
+      modalImg.src = imgURL
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0]
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none"
+    }
   })
 }
 
@@ -138,8 +175,12 @@ const displayInfo = res => {
   const usernameLi = document.createElement("li")
   const commentLi = document.createElement("li")
 
+  let comment = res.comment
+  if (comment === undefined) {
+    comment = "no comment was added!"
+  }
   usernameLi.textContent = `User: ${res.username}`
-  commentLi.textContent = `Comment: ${res.comment}`
+  commentLi.textContent = `Comment: ${comment}`
 
   el.appendChild(usernameLi)
   el.appendChild(commentLi)
@@ -152,3 +193,12 @@ const removeInfo = () => {
     el.removeChild(el.firstChild)
   }
 }
+
+// visualizise images on click
+// const imageToView = document.querySelector(".displayedImg")
+// imageToView.addEventListener("click", displayImage)
+// const displayImage = selectedImg => {
+
+//   .style.width = "500px"
+//   console.log("clicked")
+// }

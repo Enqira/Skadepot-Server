@@ -17,13 +17,16 @@ const logMeIn = () => {
       redirect: "follow"
     }
 
-    fetch("http://127.0.0.1:3001/loginadmin", requestOptions)
+    fetch("/loginadmin", requestOptions)
       .then(response => response.text())
       .then(result => {
         if (result.length <= 30) {
           alert(result)
         } else {
           console.log(result)
+          document.cookie = "'' ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+          document.cookie = `token=${result}`
+          window.location.pathname = "/admin.html"
         }
       })
       .catch(error => console.log("error", error))

@@ -6,6 +6,8 @@ const dotenv = require("dotenv")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
+// const cors = require("cors")
+
 const app = express()
 
 // Add headers for CORS
@@ -25,21 +27,10 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next()
 })
+// app.use(cors())
 
 dotenv.config()
 
-// public
-// const serveOptions = {
-//   dotfiles: "ignore",
-//   etag: false,
-//   extensions: ["htm", "html", "jpg", "png"],
-//   index: false,
-//   maxAge: "1d",
-//   redirect: false,
-//   setHeaders: function (res, path, stat) {
-//     res.set("x-timestamp", Date.now())
-//   }
-// }
 app.use(express.static(path.join(__dirname, "public")))
 
 //

@@ -8,6 +8,7 @@ const verify = require("../verifyToken")
 // Search
 router.get("/search", verify, async (req, res) => {
   // Check if user exist en db
+  console.log("line 11")
 
   const search = await DataEntry.find({ num: req.query.num })
   res.json(search)

@@ -5,6 +5,7 @@ const multer = require("multer")
 const sendEmailNow = require("../nmailer.js")
 const DataEntry = require("../models/dataEntry")
 const verify = require("../verifyToken")
+const Jimp = require("jimp")
 
 // setup static folder for images
 
@@ -12,7 +13,12 @@ const verify = require("../verifyToken")
 const storage = multer.diskStorage({
   destination: "./public/uploads/images/",
   filename: function (req, file, cb) {
-    cb(null, req.body.num + "-" + Date.now() + ".jpg")
+    const imgName = `${req.body.num}-${Date.now()}.jpg`
+    const imgURL = `./public/uploads/images/${imgName}`
+    cb(null, imgName)
+    setTimeout(() => {
+      rotate(imgURL)
+    }, 1000)
   }
 })
 
@@ -24,6 +30,7 @@ var upload = multer({ storage: storage })
 // let objectsToSend
 
 // post for /upload data
+
 router.post(
   "/upload",
   verify,
@@ -56,5 +63,16 @@ router.post(
     // sendEmailNow.mailNow(subjectField, objectsToSend);
   }
 )
+const rotate = imgURL => {
+  Jimp.read(imgURL)
+    .then(image => {
+      console.log("image rotated")
+      return image.rotate(270).write(imgURL) // save
+    })
+    .catch(err => {
+      console.error(err)
+      console.error("jimp failed")
+    })
+}
 
 module.exports = router

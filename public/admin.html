@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styleAdmin.css">
+    <link rel="stylesheet" type="text/css" href="./modal.css">
     <title>Cloud Pack</title>
 </head>
 
@@ -16,7 +17,7 @@
             <nav>
                 <h2>Cloud Pack</h2>
                 <ul class="login">
-                    <li>log-in</li>
+                    <li class="btn">log-out</li>
                 </ul>
             </nav>
         </header>
@@ -25,46 +26,61 @@
 
             <article class="search-container">
                 <div>
-                    <input id="search-input" type="input" placeholder="Enter package number">
+                    <input id="search-input" type="input" placeholder="Enter reference">
                 </div>
-                <button id="search-btn" type="button">Search</button>
+                <button id="search-btn" class="btn" type="button">Search</button>
 
             </article>
 
             <p class="search-info"></p>
 
-            <div>
-                <ul class="options">
-                    <li>Stadistics</li>
-                    <li>History</li>
-                    <li>Users</li>
-                </ul>
-            </div>
-
-            <div class="content-container">
-                <aside class="info-container">
-                    <div>
-                        <label>numbers:</label>
-                        <ul class="num-info">
-
-                        </ul>
-                    </div>
-                    <div>
-                        <label>info:</label>
-                        <ul class="package-info">
-
-                        </ul>
-                    </div>
-                </aside>
-
-                <article class="img-container">
-                    <div id="img-box">
-
-                    </div>
-                </article>
-            </div>
 
         </section>
+
+        <div class="content-container">
+
+            <aside class="info-container">
+                <div class="info-box">
+                    <div class="info-labels">numbers</div>
+                    <ul class="num-info">
+
+                    </ul>
+                </div>
+                <div>
+                    <div class="info-labels">info</div>
+                    <ul class="package-info">
+
+                    </ul>
+                </div>
+            </aside>
+
+            <div class="options-images-container">
+
+                <ul class="options">
+                    <li>Activity</li>
+                    <li>Emplpyees</li>
+                    <li>Stadistics</li>
+                </ul>
+
+
+                <!-- 
+                <div class="img-container"> -->
+                <div id="img-box">
+
+                </div>
+                <!-- </div> -->
+
+                <div id="myModal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="modal-img">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
 
         <footer>
             <p>Copyright 2020 Cloud Pack</p>
