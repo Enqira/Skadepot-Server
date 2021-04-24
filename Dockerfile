@@ -3,4 +3,4 @@ WORKDIR /cloudpack
 COPY package.json /cloudpack
 RUN npm install
 COPY . /cloudpack
-CMD ["nodemon", "app.js"]
+CMD ["npm", "start"]

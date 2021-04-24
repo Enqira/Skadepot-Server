@@ -107,7 +107,7 @@ function search() {
   }
 
   // fetch data
-  fetch(`http://localhost:3001/search?num=${searchInput.value}`, requestOptions)
+  fetch(`/search?num=${searchInput.value}`, requestOptions)
     .then(response => response.json())
     .then(result => handleResult(result))
     .catch(error => alert("something went wrong", error))
@@ -122,7 +122,7 @@ const displayImages = res => {
   res.image.map(img => {
     // getting the image url that will be the image src
     const imgName = img.filename
-    const imgDestination = img.destination.split("./public")
+    const imgDestination = img.destination.split("/public")
     const splitedImgDestination = imgDestination[1]
     const imgURL = splitedImgDestination + imgName
     // displaying image
@@ -131,13 +131,7 @@ const displayImages = res => {
     newImg.id = imgURL
     newImg.className = "displayedImg"
     imgBox.appendChild(newImg)
-    // const selectedImg = document.getElementById(`#${imgURL}`)
-    // newImg  .addEventListener("click", function () {
-    //   //   displayImage(selectedImg)
-    //   this.style.setProperty("width", "500px", "important")
 
-    //   console.log("clicked")
-    // })
     var modal = document.getElementById("myModal")
 
     // Get the image and insert it inside the modal
@@ -193,12 +187,3 @@ const removeInfo = () => {
     el.removeChild(el.firstChild)
   }
 }
-
-// visualizise images on click
-// const imageToView = document.querySelector(".displayedImg")
-// imageToView.addEventListener("click", displayImage)
-// const displayImage = selectedImg => {
-
-//   .style.width = "500px"
-//   console.log("clicked")
-// }
