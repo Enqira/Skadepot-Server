@@ -12,9 +12,12 @@ body {
     sans-serif;
   width: 100vw;
   height: 100vh;
-  /* overflow-x: hidden; */
   background-color: white;
   overflow: hidden;
+}
+nav a {
+  color: white;
+  text-decoration: none;
 }
 /* Shadows */
 #search-btn,
