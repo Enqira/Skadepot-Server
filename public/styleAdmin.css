@@ -41,6 +41,13 @@ nav {
 nav li {
   margin-left: 8px;
 }
+.log-out-btn {
+  cursor: pointer;
+}
+.log-out-btn:hover {
+  color: rgb(233, 233, 233);
+  font-size: 16.5px;
+}
 
 #search-btn {
   background-color: #58b368;
@@ -52,6 +59,11 @@ nav li {
   margin-left: 10px;
   outline: none;
   margin-bottom: 44px;
+  cursor: pointer;
+}
+#search-btn:hover {
+  transform: scale(1.03);
+  background-color: #6acc7c;
 }
 #search-input {
   height: 30px;
@@ -71,6 +83,7 @@ nav li {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-variant-caps: normal;
 }
 .search-container {
   padding: 45px 0px 15px;
@@ -99,10 +112,8 @@ nav li {
 .package-info {
   min-height: 100px;
   width: 300px;
-  background-color: white;
   display: flex;
   flex-direction: column;
-  padding: 10px 0px;
   max-height: 30vh;
 }
 
@@ -136,20 +147,39 @@ nav li {
   background-color: #58b368;
   color: white;
   height: 30px;
+  min-height: 30px;
   align-items: center;
   -webkit-box-shadow: 0px 12px 11px -13px rgba(27, 27, 27, 0.75);
   -moz-box-shadow: 0px 12px 11px -13px rgba(27, 27, 27, 0.75);
   box-shadow: 0px 12px 11px -13px rgba(27, 27, 27, 0.75);
+  z-index: 1;
 }
 .options li {
   cursor: pointer;
 }
-
-.numLi {
-  padding: 10px 0px 0px 10px;
+.options li:hover {
   cursor: pointer;
+  transform: scale(1.05);
+  color: rgb(233, 233, 233);
 }
 
+.numLi {
+  padding: 5px 0px 0px 10px;
+  cursor: pointer;
+  font-variant-caps: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #cbffd4;
+  border-bottom: 1px solid white;
+  color: rgb(43, 43, 43);
+}
+.numLi li,
+.package-info li {
+  font-variant-caps: normal;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.num-li-header {
+  padding: 5px 5px 5px 10px;
+}
 /* footer */
 footer {
   position: fixed;
@@ -167,4 +197,36 @@ footer {
   max-width: 300px;
   cursor: pointer;
   padding: 5px;
+}
+@-webkit-keyframes slide-bottom {
+  0% {
+    -webkit-transform: translateY(-25px);
+    transform: translateY(-25px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-bottom {
+  0% {
+    -webkit-transform: translateY(-25px);
+    transform: translateY(-25px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.numLi,
+.displayedImg,
+.package-info li,
+#search-input,
+#search-btn {
+  -webkit-animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }

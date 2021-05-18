@@ -1,5 +1,4 @@
 const logMeIn = () => {
-  console.log("clicked log-in")
   userName = document.getElementById("user-field").value
   password = document.getElementById("pass-field").value
   if ((userName.length < 5) | (password.length < 5)) {
@@ -23,7 +22,6 @@ const logMeIn = () => {
         if (result.length <= 30) {
           alert(result)
         } else {
-          console.log(result)
           document.cookie = "'' ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
           document.cookie = `token=${result}`
           window.location.pathname = "/admin.html"
@@ -34,3 +32,5 @@ const logMeIn = () => {
 }
 
 document.querySelector(".login-btn").addEventListener("click", logMeIn)
+const inputField = document.querySelector("#pass-field")
+inputField.addEventListener("keyup", () => event.keyCode === 13 && logMeIn())

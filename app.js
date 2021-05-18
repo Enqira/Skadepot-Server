@@ -41,6 +41,7 @@ app.use("/", require("./routes/upload"))
 app.use("/", require("./routes/posts"))
 app.use("/", require("./routes/search"))
 app.use("/", require("./routes/loginadmin"))
+app.use("/", require("./routes/activity"))
 
 // Connect mongoose
 const dbURI = process.env.DB_CONNECT

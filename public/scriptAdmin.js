@@ -10,11 +10,12 @@ const handleResult = result => {
   searchInput.value = ""
 
   const searchInfo = document.querySelector(".search-info")
+  const numInfo = ".num-info"
   if (result.length < 1) {
     searchInfo.textContent = "Nothing found!"
   } else if (result.length === 1) {
     searchInfo.textContent = "Found 1 entry!"
-    displayNumbers(result)
+    displayNumbers(result, numInfo, false)
     const res = result[0]
     displayImages(res)
     displayInfo(res)
@@ -23,7 +24,7 @@ const handleResult = result => {
       "Found " +
       result.length +
       " entries, please select one from the left column"
-    displayNumbers(result)
+    displayNumbers(result, numInfo, false)
   }
 }
 // remove if there is any image displayed
@@ -44,22 +45,24 @@ const removeNumbers = () => {
 }
 
 //   display number in the left column and there is more than one the user have to select the one that wants
-const displayNumbers = result => {
+const displayNumbers = (result, container, displayLeft) => {
   // first remove if there is any number in info
-  const numInfo = document.querySelector(".num-info")
+  const numInfo = document.querySelector(container)
   while (numInfo.firstChild) {
     numInfo.removeChild(numInfo.firstChild)
   }
   const label = document.createElement("li")
-  label.textContent = `${result.length} result/s with reference: ${result[0].num}`
+  label.textContent = displayLeft
+    ? "Here you can see your latest activity!"
+    : `${result.length} result/s for reference: ${result[0].num}`
+  label.classList.add("num-li-header")
   numInfo.appendChild(label)
-
   // loop through and add number to info column
-  result.map(n => {
+  result.reverse().map(n => {
     const newDate = new Date(n.date)
 
-    const numDate = `Date: ${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`
-    const newTime = `Time: ${newDate.getHours()}:${newDate.getMinutes()}`
+    const numDate = `date: ${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`
+    const newTime = `time: ${newDate.getHours()}:${newDate.getMinutes()}`
 
     const li = document.createElement("li")
     const dateLi = document.createElement("li")
@@ -71,13 +74,18 @@ const displayNumbers = result => {
     li.textContent = `images: ${n.image.length}`
     dateLi.textContent = numDate
     timeLi.textContent = newTime
+    if (displayLeft) {
+      const referenceLi = document.createElement("li")
+      referenceLi.textContent = `reference: ${n.num}`
+      li.appendChild(referenceLi)
+    }
 
     li.appendChild(dateLi)
     li.appendChild(timeLi)
     numInfo.appendChild(li)
 
     document.getElementById(n._id).addEventListener("click", function () {
-      selectedNum(li.id, result)
+      selectedNum(li.id, result, displayLeft)
     })
   })
 }
@@ -153,11 +161,14 @@ const displayImages = res => {
 }
 
 // when package number in the left column selected
-const selectedNum = (id, res) => {
+const selectedNum = (id, res, displayLeft) => {
   res.filter(selected => {
     if (selected._id === id) {
       displayImages(selected)
       displayInfo(selected)
+      if (displayLeft) {
+        displayNumbers([selected], ".num-info", false)
+      }
     }
   })
 }
@@ -171,7 +182,7 @@ const displayInfo = res => {
 
   let comment = res.comment
   if (comment === undefined) {
-    comment = "no comment was added!"
+    comment = "No comment was added!"
   }
   usernameLi.textContent = `User: ${res.username}`
   commentLi.textContent = `Comment: ${comment}`
@@ -187,3 +198,12 @@ const removeInfo = () => {
     el.removeChild(el.firstChild)
   }
 }
+
+// Log out handling
+const logMeOut = () => {
+  document.cookie = "'' ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+  document.cookie = `token=''`
+  console.log("loged out")
+  window.location.pathname = "/"
+}
+document.querySelector(".log-out-btn").addEventListener("click", logMeOut)
