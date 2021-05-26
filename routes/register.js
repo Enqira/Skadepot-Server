@@ -11,8 +11,8 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.post("/register", async (req, res) => {
   console.log(req.body)
   // Check if email exist en db
-  const emailExist = await User.findOne({ email: req.body.email })
-  if (emailExist) return res.status(400).send("Email already exists")
+  const nameExist = await User.exists({ name: req.body.name })
+  if (nameExist) return res.status(400).send(nameExist)
 
   // Hach password
   const salt = await bcrypt.genSalt(10)

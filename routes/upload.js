@@ -58,9 +58,6 @@ router.post(
       .catch(err => {
         console.log(err)
       })
-    // objectsToSend = req.files;
-    // subjectField = req.body.num;
-    // sendEmailNow.mailNow(subjectField, objectsToSend);
   }
 )
 const rotate = imgURL => {
