@@ -25,11 +25,12 @@ h2 {
 }
 
 input {
-  padding: 5px;
+  padding: 5px 5px 5px 12px;
   margin: 5px;
   border-radius: 30px;
-  border: 1px inset #000;
+  border: 1px solid #00000030;
   width: 285px;
+  height: 36px;
 }
 input:focus {
   outline: none;
