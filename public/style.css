@@ -26,7 +26,7 @@ h2 {
 
 input {
   padding: 5px 5px 5px 12px;
-  margin: 5px;
+  margin: 20px 5px 15px 5px;
   border-radius: 30px;
   border: 1px solid #00000030;
   width: 285px;
@@ -35,10 +35,17 @@ input {
 input:focus {
   outline: none;
 }
+.inputs-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
 label {
   padding-top: 10px;
 }
-.login-btn {
+.login-btn,
+.sign-up-btn {
   background-color: #58b368;
   color: white;
   width: 120px;
@@ -49,7 +56,8 @@ label {
   outline: none;
   margin: 20px;
 }
-.login-btn:hover {
+.login-btn:hover,
+.sign-up-btn:hover {
   background-color: #6acc7c;
   cursor: pointer;
   transform: scale(1.03);
