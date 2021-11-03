@@ -23,6 +23,10 @@ body {
 h2 {
   padding: 10px;
 }
+h4 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
 
 input {
   padding: 5px 5px 5px 12px;

@@ -6,13 +6,9 @@ const jwt = require("jsonwebtoken");
 
 // post for login
 router.post("/loginadmin", async (req, res) => {
-  console.log("before: " + req.body.name);
-  mongoose.set("debug", (collectionName, method, query, doc) => {
-    console.log(`${collectionName}.${method}`, JSON.stringify(query), doc);
-  });
+
   // Check if user exist en db
   const user = await User.findOne({ name: req.body.name });
-  console.log("after: " + user);
 
   if (!user) return res.status(400).send("'name' or password is wrong!");
   // check if password is correct

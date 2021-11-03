@@ -173,7 +173,7 @@ nav li {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #cbffd4;
   border-bottom: 1px solid white;
-  color: rgb(43, 43, 43);
+  color: #729c8e;
 }
 .numLi li,
 .package-info li {
@@ -182,6 +182,10 @@ nav li {
 }
 .num-li-header {
   padding: 5px 5px 5px 10px;
+}
+
+.reference-li {
+  color: #424242;
 }
 /* footer */
 footer {
@@ -232,4 +236,19 @@ footer {
 #search-btn {
   -webkit-animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@media only screen and (max-width: 600px) {
+  .content-container {
+    flex-direction: column;
+  }
+  .info-container,
+  .info-labels,
+  .info-box,
+  .options {
+    width: 100%;
+  }
+  .numLi {
+    width: 100vw;
+  }
 }
